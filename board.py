@@ -8,18 +8,56 @@ class Board():
     def draw_board(self):
         BLACK = (0, 0, 0)
         WHITE = (255, 255, 255)
-        GREEN = (0, 255, 0)
+        GREEN_L = (0, 255, 0)
+        GREEN_D = (0, 105, 0)
         RED = (255, 0, 0)
+        BLUE = (0, 255, 255)
+        GREY = (105, 105, 105)
+        BLUE_D = (0, 0, 128)
+        BLUE_L = (176, 196, 222)
+
+        GRASS = 1
+        MOUNTAIN = 2
+        ICE = 3
+        FOREST = 4
+        RIVER = 5
+        WATER = 6
+        tiles = [
+            [WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER,WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER],
+            [WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER,WATER, WATER, WATER, WATER, WATER, WATER, WATER, ICE],
+            [WATER, WATER, WATER, WATER, WATER, MOUNTAIN, MOUNTAIN, FOREST, FOREST, FOREST, RIVER, FOREST, FOREST, WATER, WATER, WATER, WATER, ICE, WATER, ICE],
+            [WATER, WATER, MOUNTAIN, ICE, WATER, WATER, GRASS, MOUNTAIN, FOREST, FOREST, RIVER, RIVER, FOREST, FOREST, WATER, WATER, WATER, ICE, WATER, WATER],
+            [WATER, WATER, MOUNTAIN, WATER, WATER, WATER, GRASS, MOUNTAIN, FOREST, FOREST, FOREST, RIVER, RIVER, FOREST, ICE, WATER, ICE,ICE, WATER, WATER],
+            [WATER, WATER, MOUNTAIN, WATER, WATER, WATER, GRASS, MOUNTAIN, FOREST, FOREST, FOREST, RIVER, RIVER, ICE, ICE, ICE, ICE, ICE, WATER, WATER],
+            [WATER, WATER, ICE, MOUNTAIN, ICE, MOUNTAIN, MOUNTAIN, FOREST, FOREST, FOREST, FOREST, FOREST, RIVER, ICE, ICE, ICE, ICE, ICE, WATER, WATER],
+            [WATER, WATER, WATER, ICE, ICE, MOUNTAIN, MOUNTAIN, FOREST, FOREST, FOREST, GRASS, FOREST, RIVER, RIVER, ICE, ICE, ICE, ICE, WATER, WATER],
+            [WATER, WATER, WATER, GRASS, MOUNTAIN, MOUNTAIN, FOREST, FOREST, FOREST, FOREST, GRASS, GRASS, GRASS, RIVER, GRASS, ICE, ICE, ICE, WATER, WATER],
+            [WATER, WATER, WATER, ICE, ICE, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, GRASS, RIVER, RIVER, RIVER, RIVER, WATER, WATER, WATER, WATER],
+            [WATER, WATER, WATER, ICE, MOUNTAIN, MOUNTAIN, GRASS, GRASS, GRASS, GRASS, GRASS, RIVER, RIVER, GRASS, GRASS,  WATER, WATER, WATER, WATER, WATER],
+            [WATER, WATER, WATER, WATER, ICE, MOUNTAIN, MOUNTAIN, GRASS, GRASS, GRASS, RIVER, RIVER, GRASS, GRASS, WATER, WATER, WATER, WATER, WATER, WATER],
+            [WATER, WATER, WATER, WATER, MOUNTAIN, ICE, MOUNTAIN, GRASS, GRASS, GRASS, RIVER, GRASS, MOUNTAIN, MOUNTAIN, WATER, WATER, ICE, WATER, WATER, WATER],
+            [WATER, WATER, WATER, WATER, WATER, MOUNTAIN, MOUNTAIN, MOUNTAIN, GRASS, GRASS, RIVER, MOUNTAIN, MOUNTAIN, WATER, WATER, WATER, ICE, ICE, WATER, WATER],
+            [WATER, WATER, WATER, WATER, WATER, WATER, MOUNTAIN, MOUNTAIN, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER],
+            [WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER,WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER]
+        ]
+        Tile_Color = {
+            GRASS: GREEN_L,
+            MOUNTAIN: GREY,
+            ICE: BLUE_L,
+            FOREST: GREEN_D,
+            RIVER: BLUE,
+            WATER: BLUE_D
+        }
 
         width = 50
         height = 50
         screen = pygame.display.set_mode(settings.screen_size)
-        screen.fill(BLACK)
+        screen.fill(WHITE)
         plus_amount = 10
         row_height = 7
-        for row in range(1, 17):
-            for column in range(1, 21):
-                pygame.draw.rect(screen, WHITE, [((column - 1) * 50) + plus_amount, row_height, width, height])
+        for row in range(16):
+            for column in range(20):
+                pygame.draw.rect(screen, Tile_Color[tiles[row][column]], [(column * 50) + plus_amount, row_height, width, height])
                 plus_amount += 1
             plus_amount = 10
             row_height += 51
