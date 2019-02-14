@@ -2,7 +2,7 @@ import sys
 import pygame
 import settings
 from board import Board
-from map_cells import Cell
+from Map_cells import Cell
 
 
 def event_check():
