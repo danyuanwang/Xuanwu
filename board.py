@@ -21,6 +21,27 @@ class Board():
         self.map.draw(screen)
 
 
+    def event_check(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                self.check_keydown(event)
+
+
+    def check_keydown(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            print(mouse_x, mouse_y)
+            cell = self.map.find_cell_by_pos(Board.convert_screen_xy_to_map_pos(mouse_x, mouse_y))
+            print(cell)
+
+    @staticmethod
+    def convert_screen_xy_to_map_pos(x, y):
+        map_pos_i = x / settings.cell_size[0]
+        map_pos_j = y / settings.cell_size[1]
+        return map_pos_i,map_pos_j
+
 
 
 

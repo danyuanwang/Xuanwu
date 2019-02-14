@@ -10,7 +10,7 @@ def run_game():
 
     pygame.display.set_caption("xuanwu game")
     while True:
-        check_events.event_check()
+        board.event_check()
         board.draw_board()
         pygame.display.flip()
 run_game()

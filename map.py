@@ -28,3 +28,8 @@ class Map:
         for i in range(len(self.tiles)):
             for j in range(len(self.tiles[i])):
                 self.tiles[i][j].draw(screen)
+
+    def find_cell_by_pos(i, j):
+        if(i >= 0 and i < self.x_dimension and j >= 0 and j < self.y_dimension):
+            return self.tiles[i][j]
+        return None

@@ -54,13 +54,7 @@ class Cell:
         cell = cls(cell_type, i, j, x_offset, y_offset)
         return cell
 
-    @classmethod
-    def find_instance(cls, celllist, i, j):
-        for row in celllist:
-            for elem in row:
-                if(elem.check_pos_in(i, j) == True):
-                    return elem
-        return None
+
 
 
 
