@@ -1,7 +1,10 @@
 import sys
 import pygame
+import settings
 from board import Board
-from Map_cells import Cell
+from map_cells import Cell
+
+
 def event_check():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -9,19 +12,17 @@ def event_check():
         elif event.type == pygame.MOUSEBUTTONDOWN:
             print('hi')
             check_keydown(event)
+
+
 def check_keydown(event):
     if event.type == pygame.MOUSEBUTTONDOWN:
         mouse_x, mouse_y = pygame.mouse.get_pos()
         print(mouse_x, mouse_y)
-        Cell = find_cell(mouse_x, mouse_y)
-        cell_value = check_block_click(Cell)
-        print(cell_value)
-def check_block_click(Cell):
-    if Cell is not None:
-        return Cell.return_value()
-def find_cell(mouse_x, mouse_y):
-    for i in range(len(Board.tiles)):
-        for j in range(len(Board.tiles[i])):
-            if Board.tiles[i][j].check_mouse_in(mouse_x, mouse_y):
-                return Board.tiles[i][j]
-    return None
+        Cell = Cell.find_instance(convert_screen_xy_to_map_pos(mouse_x, mouse_y))
+        print(Cell)
+
+
+def convert_screen_xy_to_map_pos(x, y):
+    map_pos_i = x / cell_size[0]
+    map_pos_j = y / cell_size[1]
+    return map_pos(map_pos_i,map_pos_j)
