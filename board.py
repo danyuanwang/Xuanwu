@@ -1,17 +1,8 @@
 import pygame
 import settings
-from Map_cells import Cell
-class Board():
-    BLACK = (0, 0, 0)
+from map_cells import Cell
 
-    WHITE = (255, 255, 255)
-    GREEN_L = (0, 255, 0)
-    GREEN_D = (0, 105, 0)
-    RED = (255, 0, 0)
-    BLUE = (0, 255, 255)
-    GREY = (105, 105, 105)
-    BLUE_D = (0, 0, 128)
-    BLUE_L = (176, 196, 222)
+class Board():
 
     GRASS = Cell(1)
     MOUNTAIN = Cell(2)
@@ -37,14 +28,6 @@ class Board():
         [WATER, WATER, WATER, WATER, WATER, WATER, MOUNTAIN, MOUNTAIN, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER],
         [WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER, WATER]
     ]
-    Tile_Color = {
-        GRASS: GREEN_L,
-        MOUNTAIN: GREY,
-        ICE: BLUE_L,
-        FOREST: GREEN_D,
-        RIVER: BLUE,
-        WATER: BLUE_D
-        }
 #    def __init__(self):
 
 
@@ -59,12 +42,12 @@ class Board():
         width = 50
         height = 50
         screen = pygame.display.set_mode(settings.screen_size)
-        screen.fill(Board.WHITE)
+        screen.fill(Color.WHITE)
         plus_amount = 10
         row_height = 7
         for row in range(16):
             for column in range(20):
-                pygame.draw.rect(screen, Board.Tile_Color[Board.tiles[row][column]], [(column * 50) + plus_amount, row_height, width, height])
+                pygame.draw.rect(screen, Color.Tile_Color[Board.tiles[row][column]], [(column * 50) + plus_amount, row_height, width, height])
                 plus_amount += 1
             plus_amount = 10
             row_height += 51
