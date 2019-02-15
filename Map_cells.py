@@ -15,10 +15,10 @@ class Cell:
         self.x_offset = x_offset
         self.y_offset = y_offset
 
-        self.column_index = i
-        self.row_index = j
-        self.x_screen = self.column_index * (self.cell_width + self.x_margin)
-        self.y_screen = self.row_index * (self.cell_height + self.y_margin)
+        self.column_index = j
+        self.row_index = i
+        self.x_screen = self.column_index * (self.cell_width + self.x_margin) + self.x_offset
+        self.y_screen = self.row_index * (self.cell_height + self.y_margin) + self.y_offset
         self.cell_type = cell_type
 
         if self.cell_type == CellType.GRASS:

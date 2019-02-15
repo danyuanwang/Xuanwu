@@ -1,5 +1,6 @@
 import pygame
 import settings
+import sys
 from Map_cells import Cell
 from constants import Color
 from mapdata import MapData

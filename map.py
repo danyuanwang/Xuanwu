@@ -13,14 +13,15 @@ class Map:
         self.x_margin = x_margin
         self.y_margin = y_margin
 
-        self.tiles = [[i * j for i in range(self.x_dimension)] for j in range(self.y_dimension)]
-        for i in range(len(self.tiles)):
-            for j in range(len(self.tiles[i])):
-                print("tiles dimension:", len(self.tiles), len(self.tiles[i]), "x_dimension:", x_dimension, "y_dimension:",y_dimension, "i:",i,"j:",j)
-                self.tiles[i][j] = \
+        self.tiles = [[i_row * j_column for j_column in range(self.x_dimension)]for i_row in range(self.y_dimension)]
+        for i_row in range(len(self.tiles)):
+            for j_column in range(len(self.tiles[i_row])):
+                print("map_normal dimension:", len(MapData.map_normal), "tiles dimension:", len(self.tiles), len(self.tiles[i_row]), "x_dimension:", x_dimension, "y_dimension:",y_dimension, "i:",i_row,"j:",j_column)
+                print('x', )
+                self.tiles[i_row][j_column] = \
                     Cell.create_instance(
-                        MapData.map_normal[i][j],
-                        i, j, self.x_margin, self.y_margin)
+                        MapData.map_normal[i_row][j_column],
+                        i_row, j_column, self.x_margin, self.y_margin)
 
 
 
