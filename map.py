@@ -16,10 +16,10 @@ class Map:
         self.tiles = [[i * j for j in range(self.y_dimension)] for i in range(self.x_dimension)]
         for i in range(len(self.tiles)):
             for j in range(len(self.tiles[i])):
+                print("tiles dimension:", len(self.tiles), len(self.tiles[i]), "x_dimension:", x_dimension, "y_dimension:",y_dimension, "i:",i,"j:",j)
                 self.tiles[i][j] = \
                     Cell.create_instance(
- #                       MapData.map_normal[i][j],
-                        CellType.GRASS,
+                        MapData.map_normal[i][j],
                         i, j, self.x_margin, self.y_margin)
 
 
@@ -29,7 +29,7 @@ class Map:
             for j in range(len(self.tiles[i])):
                 self.tiles[i][j].draw(screen)
 
-    def find_cell_by_pos(i, j):
+    def find_cell_by_pos(self, i, j):
         if(i >= 0 and i < self.x_dimension and j >= 0 and j < self.y_dimension):
             return self.tiles[i][j]
         return None
