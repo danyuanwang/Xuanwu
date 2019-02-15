@@ -17,8 +17,8 @@ class Cell:
 
         self.column_index = i
         self.row_index = j
-        self.x_screen = self.column_index * self.cell_width
-        self.y_screen = self.row_index * self.cell_height
+        self.x_screen = self.column_index * (self.cell_width + self.x_margin)
+        self.y_screen = self.row_index * (self.cell_height + self.y_margin)
         self.cell_type = cell_type
 
         if self.cell_type == CellType.GRASS:
@@ -47,7 +47,7 @@ class Cell:
         pygame.draw.rect(
             screen,
             Tile_Color[self.cell_type],
-            [self.x_screen + self.x_margin, self.y_screen + self.y_margin, self.cell_width, self.cell_height])
+            [self.x_screen, self.y_screen, self.cell_width, self.cell_height])
 
     @classmethod
     def create_instance(cls, cell_type, i, j, x_offset, y_offset):
