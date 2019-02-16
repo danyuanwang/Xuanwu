@@ -22,6 +22,8 @@ class Map:
                     Cell.create_instance(
                         MapData.map_normal[i_row][j_column],
                         i_row, j_column, self.x_margin, self.y_margin)
+                cell = self.tiles[i_row][j_column]
+                print("cell", cell.cell_type)
 
 
 
@@ -30,7 +32,27 @@ class Map:
             for j in range(len(self.tiles[i])):
                 self.tiles[i][j].draw(screen)
 
-    def find_cell_by_pos(self, i, j):
-        if(i >= 0 and i < self.x_dimension and j >= 0 and j < self.y_dimension):
-            return self.tiles[i][j]
+    def find_cell_by_pos(self, i_row, j_column):
+        print('i_row and j_column:', i_row, j_column, 'x and y:', self.x_dimension, self.y_dimension)
+        if(i_row >= 0 and i_row < self.y_dimension and j_column >= 0 and j_column < self.x_dimension):
+            return self.tiles[i_row][j_column]
         return None
+
+    def find_cell_by_xy(self, screen_x, screen_y):
+        for row in self.tiles:
+            for cell in row:
+                if cell.check_screen_xy_in(screen_x, screen_y):
+                    return cell
+        return None
+
+    @staticmethod
+    def convert_screen_xy_to_map_pos(x, y):
+        cell_width = settings.cell_size[0]
+        cell_height = settings.cell_size[1]
+        x_margin = settings.cell_size[2]
+        y_margin = settings.cell_size[3]
+        x_offset = settings.board_dimension[2]
+        y_offset = settings.board_dimension[3]
+        map_pos_j_column = int((x - x_offset)/(cell_width + x_margin))
+        map_pos_i_row = int((y - y_offset)/(cell_height + y_margin))
+        return map_pos_i_row,map_pos_j_column
