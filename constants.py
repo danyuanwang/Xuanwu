@@ -8,6 +8,11 @@ class CellType(Enum):
     RIVER = 5,
     WATER = 6,
 
+class MineType(Enum):
+    STONE_MINE = 1,
+    IRON_MINE = 2,
+    DIAMOND_MINE = 3,
+
 
 class Color:
     BLACK = (0, 0, 0)
