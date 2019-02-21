@@ -20,6 +20,7 @@ class Cell:
         self.x_screen = self.column_index * (self.cell_width + self.x_margin) + self.x_offset
         self.y_screen = self.row_index * (self.cell_height + self.y_margin) + self.y_offset
         self.cell_type = cell_type
+        self.mine = None
 
         if self.cell_type == CellType.GRASS:
             self.altitude = 1
@@ -48,13 +49,17 @@ class Cell:
             screen,
             Tile_Color[self.cell_type],
             [self.x_screen, self.y_screen, self.cell_width, self.cell_height])
+        if self.mine is not None:
+            rect = [self.x_screen,self.y_screen,self.cell_width,self.cell_height]
+            self.mine.draw(rect)
 
     def check_screen_xy_in(self, screen_x, screen_y):
         if screen_x >= self.x_screen and screen_x < self.x_screen + self.cell_width:
             if screen_y >= self.y_screen and screen_y < self.y_screen + self.cell_height:
                 return True
         return False
-
+    def set_mine(self, mine):
+        self.mine = mine
     @classmethod
     def create_instance(cls, cell_type, i, j, x_offset, y_offset):
         cell = cls(cell_type, i, j, x_offset, y_offset)

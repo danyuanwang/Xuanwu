@@ -52,9 +52,9 @@ class Map:
                 if mine is not None:
                     Map.diamond_mines_list.append(mine)
 
-        print("stone mines", Map.stone_mines_list, Map.stone_mines_limit)
-        print("iron mines", Map.iron_mines_list, Map.iron_mines_limit)
-        print("diamond mines", Map.diamond_mines_list, Map.diamond_mines_limit)
+        #print("stone mines", Map.stone_mines_list, Map.stone_mines_limit)
+        #print("iron mines", Map.iron_mines_list, Map.iron_mines_limit)
+        #print("diamond mines", Map.diamond_mines_list, Map.diamond_mines_limit)
 
     def draw(self, screen):
         for i in range(len(self.tiles)):
