@@ -1,6 +1,7 @@
 from pygame.sprite import Sprite
 from constants import CellType, MineType
 import pygame
+from rectangle import Rectangle
 
 
 class Mine(Sprite):
@@ -15,8 +16,8 @@ class Mine(Sprite):
 
     def draw(self, rect, screen):
         self.image_rect = self.image.get_rect()
-        rect_centerx = rect[0] + (rect[2] / 2)
-        rect_centery = rect[1] + (rect[3] / 2)
+        rect_centerx, rect_centery = rect.get_center_point()
+        #rect_centery = rect[1] + (rect[3] / 2)
         self.image_rect.centerx = rect_centerx
         self.image_rect.centery = rect_centery
         screen.blit(self.image, self.image_rect)

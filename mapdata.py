@@ -1,5 +1,6 @@
 from constants import CellType
 
+
 class MapData:
     map_normal = [
         [CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER, CellType.WATER],

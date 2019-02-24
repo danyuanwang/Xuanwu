@@ -2,16 +2,16 @@ import pygame
 import settings
 from random import randint
 from constants import CellType
-from constants import Color
 from constants import Tile_Color
+from rectangle import Rectangle
 
 
 class Cell:
     def __init__(self, cell_type, i, j, x_offset, y_offset):
-        self.cell_width = settings.cell_size[0]
-        self.cell_height = settings.cell_size[1]
-        self.x_margin = settings.cell_size[2]
-        self.y_margin = settings.cell_size[3]
+        self.cell_width = settings.cell_size['cell_width']
+        self.cell_height = settings.cell_size['cell_height']
+        self.x_margin = settings.cell_size['x_margin']
+        self.y_margin = settings.cell_size['y_margin']
         self.x_offset = x_offset
         self.y_offset = y_offset
 
@@ -50,7 +50,7 @@ class Cell:
             Tile_Color[self.cell_type],
             [self.x_screen, self.y_screen, self.cell_width, self.cell_height])
         if self.mine is not None:
-            rect = [self.x_screen, self.y_screen, self.cell_width, self.cell_height]
+            rect = Rectangle(self.x_screen, self.y_screen, self.cell_width, self.cell_height)
             self.mine.draw(rect, screen)
 
     def check_screen_xy_in(self, screen_x, screen_y):
@@ -58,8 +58,15 @@ class Cell:
             if screen_y >= self.y_screen and screen_y < self.y_screen + self.cell_height:
                 return True
         return False
+
     def set_mine(self, mine):
         self.mine = mine
+
+    def has_mine(self):
+        if self.mine is not None:
+            return True
+        return False
+
     @classmethod
     def create_instance(cls, cell_type, i, j, x_offset, y_offset):
         cell = cls(cell_type, i, j, x_offset, y_offset)
