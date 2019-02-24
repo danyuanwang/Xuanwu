@@ -15,7 +15,9 @@ class Map:
     stone_mines_list = []
     iron_mines_list = []
     diamond_mines_list = []
-
+    print('stone limit:', stone_mines_limit, 'list', len(stone_mines_list))
+    print('iron limit:', iron_mines_limit, 'list', len(iron_mines_list))
+    print('diamond limit:', diamond_mines_limit, 'list:', len(diamond_mines_list))
     def __init__(self, x_dimension, y_dimension, x_margin, y_margin):
         self.x_dimension = x_dimension
         self.y_dimension = y_dimension
@@ -35,7 +37,7 @@ class Map:
 
                 if cell.cell_type == CellType.MOUNTAIN:
                     self.mountains_list.append(cell)
-                print("cell", cell.cell_type)
+                #print("cell", cell.cell_type)
         for i in range(Map.stone_mines_limit + Map.iron_mines_limit + Map.diamond_mines_limit):
             index_mountain = randint(0, len(self.mountains_list)-1)
             selected_mountain_cell = self.mountains_list[index_mountain]
@@ -43,18 +45,23 @@ class Map:
                 mine = Mine.create_instance(selected_mountain_cell, MineType.STONE_MINE)
                 if mine is not None:
                     Map.stone_mines_list.append(mine)
+                    print('made a mine')
             if len(Map.iron_mines_list) < Map.iron_mines_limit:
                 mine = Mine.create_instance(selected_mountain_cell, MineType.IRON_MINE)
                 if mine is not None:
                     Map.iron_mines_list.append(mine)
+                    print('made a mine')
             if len(Map.diamond_mines_list) < Map.diamond_mines_limit:
                 mine = Mine.create_instance(selected_mountain_cell, MineType.DIAMOND_MINE)
                 if mine is not None:
                     Map.diamond_mines_list.append(mine)
+                    print('made a mine')
+
 
         #print("stone mines", Map.stone_mines_list, Map.stone_mines_limit)
         #print("iron mines", Map.iron_mines_list, Map.iron_mines_limit)
         #print("diamond mines", Map.diamond_mines_list, Map.diamond_mines_limit)
+
 
     def draw(self, screen):
         for i in range(len(self.tiles)):

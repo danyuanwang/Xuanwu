@@ -50,8 +50,8 @@ class Cell:
             Tile_Color[self.cell_type],
             [self.x_screen, self.y_screen, self.cell_width, self.cell_height])
         if self.mine is not None:
-            rect = [self.x_screen,self.y_screen,self.cell_width,self.cell_height]
-            self.mine.draw(rect)
+            rect = [self.x_screen, self.y_screen, self.cell_width, self.cell_height]
+            self.mine.draw(rect, screen)
 
     def check_screen_xy_in(self, screen_x, screen_y):
         if screen_x >= self.x_screen and screen_x < self.x_screen + self.cell_width:
