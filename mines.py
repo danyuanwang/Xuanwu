@@ -1,13 +1,13 @@
 from pygame.sprite import Sprite
 from constants import CellType, MineType
 import pygame
+from random import  randint
 from rectangle import Rectangle
 
 
 class Mine(Sprite):
-    def __init__(self, miners_allowed):
+    def __init__(self):
         super(Mine, self).__init__()
-        self.miners_allowed = miners_allowed
         self.cell = None
         self.image = None
         self.image_rect = None
@@ -22,6 +22,11 @@ class Mine(Sprite):
         self.image_rect.centery = rect_centery
         screen.blit(self.image, self.image_rect)
         #print('centerx:', rect_centerx, 'centery', rect_centery, 'minetype', self.mine_type)
+
+
+class MountainMines(Mine):
+    def __init__(self, miners_allowed):
+        self.miners_allowed = miners_allowed
 
     @classmethod
     def create_instance(cls, cell, mine_type):
@@ -39,27 +44,27 @@ class Mine(Sprite):
         return None
 
 
-class StoneMine(Mine):
+class StoneMine(MountainMines):
     def __init__(self):
-        Mine.__init__(self, miners_allowed=3)
+        MountainMines.__init__(self, miners_allowed=3)
         self.mine_type = MineType.STONE_MINE
         self.image_path = 'icons_and_pictures/stone_mine.PNG'
         self.image = pygame.image.load(self.image_path)
         self.image = pygame.transform.scale(self.image, (30, 30))
 
 
-class IronMine(Mine):
+class IronMine(MountainMines):
     def __init__(self):
-        Mine.__init__(self, miners_allowed=3)
+        MountainMines.__init__(self, miners_allowed=3)
         self.mine_type = MineType.IRON_MINE
         self.image_path = 'icons_and_pictures/iron_mine.PNG'
         self.image = pygame.image.load(self.image_path)
         self.image = pygame.transform.scale(self.image, (30, 30))
 
 
-class DiamondMine(Mine):
+class DiamondMine(MountainMines):
     def __init__(self):
-        Mine.__init__(self, miners_allowed=3)
+        MountainMines.__init__(self, miners_allowed=3)
         self.mine_type = MineType.DIAMOND_MINE
         self.image_path = 'icons_and_pictures/diamond_mine.PNG'
         self.image = pygame.image.load(self.image_path)

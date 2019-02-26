@@ -39,3 +39,8 @@ diamond_mine_number = {
                 'low_value': 1,
                 'high_value': 2,
                 }
+#logging mines
+logging_mine_number = {
+    'low_value': 3,
+    'high_value': 5,
+}

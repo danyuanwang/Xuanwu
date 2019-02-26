@@ -14,6 +14,7 @@ class MineType(Enum):
     STONE_MINE = 1,
     IRON_MINE = 2,
     DIAMOND_MINE = 3,
+    LOG_MINE = 4,
 
 
 class Color:

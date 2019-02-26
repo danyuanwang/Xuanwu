@@ -4,7 +4,8 @@ from constants import CellType
 from Map_cells import Cell
 from constants import Color
 from mapdata import MapData
-from mines import Mine
+from mines import Mine , MountainMines
+from logging_area import ForestMines
 from random import randint
 from constants import MineType
 
@@ -12,11 +13,13 @@ class Map:
     stone_mines_limit = randint(settings.stone_mine_number['low_value'], settings.stone_mine_number['high_value'])
     iron_mines_limit = randint(settings.iron_mine_number['low_value'], settings.iron_mine_number['high_value'])
     diamond_mines_limit = randint(settings.diamond_mine_number['low_value'], settings.diamond_mine_number['high_value'])
+    logging_mines_limit = randint(settings.logging_mine_number['low_value'], settings.logging_mine_number['high_value'])
 
     def __init__(self, x_dimension, y_dimension, x_margin, y_margin):
         self.stone_mines_list = []
         self.iron_mines_list = []
         self.diamond_mines_list = []
+        self.logging_mines_list = []
         self.x_dimension = x_dimension
         self.y_dimension = y_dimension
         self.x_margin = x_margin
@@ -27,6 +30,7 @@ class Map:
 
         self.tiles = [[i_row * j_column for j_column in range(self.x_dimension)]for i_row in range(self.y_dimension)]
         self.mountains_without_mines_list = []
+        self.forests_without_mines_list = []
         for i_row in range(len(self.tiles)):
             for j_column in range(len(self.tiles[i_row])):
                 #print("map_normal dimension:", len(MapData.map_normal), "tiles dimension:", len(self.tiles), len(self.tiles[i_row]), "x_dimension:", x_dimension, "y_dimension:",y_dimension, "i:",i_row,"j:",j_column)
@@ -38,32 +42,12 @@ class Map:
 
                 if cell.cell_type == CellType.MOUNTAIN:
                     self.mountains_without_mines_list.append(cell)
+                if cell.cell_type == CellType.FOREST:
+                    self.forests_without_mines_list.append(cell)
                 #print("cell", cell.cell_type)
-        while len(self.stone_mines_list)+len(self.iron_mines_list) + len(self.diamond_mines_list) <\
-                Map.stone_mines_limit + Map.iron_mines_limit + Map.diamond_mines_limit:
-            index_mountain = randint(0, len(self.mountains_without_mines_list)-1)
-            selected_mountain_cell = self.mountains_without_mines_list[index_mountain]
-            if selected_mountain_cell.has_mine() is not True:
-                if len(self.stone_mines_list) < Map.stone_mines_limit:
-                    mine = Mine.create_instance(selected_mountain_cell, MineType.STONE_MINE)
-                    if mine is not None:
-                        self.stone_mines_list.append(mine)
-                        self.mountains_without_mines_list.remove(selected_mountain_cell)
-                        print('made a mine', mine.mine_type, 'index', index_mountain)
-            if selected_mountain_cell.has_mine() is not True:
-                if len(self.iron_mines_list) < Map.iron_mines_limit:
-                    mine = Mine.create_instance(selected_mountain_cell, MineType.IRON_MINE)
-                    if mine is not None:
-                        self.iron_mines_list.append(mine)
-                        self.mountains_without_mines_list.remove(selected_mountain_cell)
-                        print('made a mine', mine.mine_type, 'index', index_mountain)
-            if selected_mountain_cell.has_mine() is not True:
-                if len(self.diamond_mines_list) < Map.diamond_mines_limit:
-                    mine = Mine.create_instance(selected_mountain_cell, MineType.DIAMOND_MINE)
-                    if mine is not None:
-                        self.diamond_mines_list.append(mine)
-                        self.mountains_without_mines_list.remove(selected_mountain_cell)
-                        print('made a mine', mine.mine_type, 'index', index_mountain)
+        self.create_mountain_mines()
+        self.create_forest_mines()
+
 
 
         #print("stone mines", Map.stone_mines_list, Map.stone_mines_limit)
@@ -89,6 +73,44 @@ class Map:
                     return cell
         return None
 
+    def create_mountain_mines(self):
+        while len(self.stone_mines_list)+len(self.iron_mines_list) + len(self.diamond_mines_list) <\
+                Map.stone_mines_limit + Map.iron_mines_limit + Map.diamond_mines_limit:
+            index_mountain = randint(0, len(self.mountains_without_mines_list)-1)
+            selected_mountain_cell = self.mountains_without_mines_list[index_mountain]
+            if selected_mountain_cell.has_mine() is not True:
+                if len(self.stone_mines_list) < Map.stone_mines_limit:
+                    mine = MountainMines.create_instance(selected_mountain_cell, MineType.STONE_MINE)
+                    if mine is not None:
+                        self.stone_mines_list.append(mine)
+                        self.mountains_without_mines_list.remove(selected_mountain_cell)
+                        print('made a mine', mine.mine_type, 'index', index_mountain)
+            if selected_mountain_cell.has_mine() is not True:
+                if len(self.iron_mines_list) < Map.iron_mines_limit:
+                    mine = MountainMines.create_instance(selected_mountain_cell, MineType.IRON_MINE)
+                    if mine is not None:
+                        self.iron_mines_list.append(mine)
+                        self.mountains_without_mines_list.remove(selected_mountain_cell)
+                        print('made a mine', mine.mine_type, 'index', index_mountain)
+            if selected_mountain_cell.has_mine() is not True:
+                if len(self.diamond_mines_list) < Map.diamond_mines_limit:
+                    mine = MountainMines.create_instance(selected_mountain_cell, MineType.DIAMOND_MINE)
+                    if mine is not None:
+                        self.diamond_mines_list.append(mine)
+                        self.mountains_without_mines_list.remove(selected_mountain_cell)
+                        print('made a mine', mine.mine_type, 'index', index_mountain)
+
+    def create_forest_mines(self):
+        while len(self.logging_mines_list) < self.logging_mines_limit:
+            index_forest = randint(0, len(self.forests_without_mines_list) - 1)
+            selected_forest_cell = self.forests_without_mines_list[index_forest]
+            if selected_forest_cell.has_mine() is not True:
+                if len(self.logging_mines_list) < Map.logging_mines_limit:
+                    mine = ForestMines.create_instance(selected_forest_cell, MineType.LOG_MINE)
+                    if mine is not None:
+                        self.logging_mines_list.append(mine)
+                        self.forests_without_mines_list.remove(selected_forest_cell)
+                        print('made a mine', mine.mine_type, 'index', index_forest)
     @staticmethod
     def convert_screen_xy_to_map_pos(x, y):
         cell_width = settings.cell_size[0]

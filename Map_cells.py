@@ -4,7 +4,7 @@ from random import randint
 from constants import CellType
 from constants import Tile_Color
 from rectangle import Rectangle
-
+from mines import Mine, StoneMine
 
 class Cell:
     def __init__(self, cell_type, i, j, x_offset, y_offset):
@@ -66,6 +66,7 @@ class Cell:
         if self.mine is not None:
             return True
         return False
+
 
     @classmethod
     def create_instance(cls, cell_type, i, j, x_offset, y_offset):
