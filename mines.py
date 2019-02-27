@@ -13,6 +13,7 @@ class Mine(Sprite):
         self.image_rect = None
         self.mine_type = None
         self.image_path = None
+        self.miners_allowed = 0
 
     def draw(self, rect, screen):
         self.image_rect = self.image.get_rect()
@@ -25,8 +26,8 @@ class Mine(Sprite):
 
 
 class MountainMines(Mine):
-    def __init__(self, miners_allowed):
-        self.miners_allowed = miners_allowed
+    def __init__(self):
+        self.miners_allowed = 3
 
     @classmethod
     def create_instance(cls, cell, mine_type):
@@ -46,7 +47,7 @@ class MountainMines(Mine):
 
 class StoneMine(MountainMines):
     def __init__(self):
-        MountainMines.__init__(self, miners_allowed=3)
+        MountainMines.__init__(self)
         self.mine_type = MineType.STONE_MINE
         self.image_path = 'icons_and_pictures/stone_mine.PNG'
         self.image = pygame.image.load(self.image_path)
@@ -55,7 +56,7 @@ class StoneMine(MountainMines):
 
 class IronMine(MountainMines):
     def __init__(self):
-        MountainMines.__init__(self, miners_allowed=3)
+        MountainMines.__init__(self)
         self.mine_type = MineType.IRON_MINE
         self.image_path = 'icons_and_pictures/iron_mine.PNG'
         self.image = pygame.image.load(self.image_path)
@@ -64,7 +65,7 @@ class IronMine(MountainMines):
 
 class DiamondMine(MountainMines):
     def __init__(self):
-        MountainMines.__init__(self, miners_allowed=3)
+        MountainMines.__init__(self)
         self.mine_type = MineType.DIAMOND_MINE
         self.image_path = 'icons_and_pictures/diamond_mine.PNG'
         self.image = pygame.image.load(self.image_path)

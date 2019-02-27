@@ -8,18 +8,23 @@ from mines import Mine , MountainMines
 from logging_area import ForestMines
 from random import randint
 from constants import MineType
+from hunting_grounds import GrassMines
 
 class Map:
     stone_mines_limit = randint(settings.stone_mine_number['low_value'], settings.stone_mine_number['high_value'])
     iron_mines_limit = randint(settings.iron_mine_number['low_value'], settings.iron_mine_number['high_value'])
     diamond_mines_limit = randint(settings.diamond_mine_number['low_value'], settings.diamond_mine_number['high_value'])
     logging_mines_limit = randint(settings.logging_mine_number['low_value'], settings.logging_mine_number['high_value'])
+    grass_mines_limit = randint(settings.hunting_mine_number['low_value'], settings.hunting_mine_number['high_value'])
+    big_grass_mines_limit = randint(settings.big_hunting_mine_number['low_value'], settings.big_hunting_mine_number['high_value'])
 
     def __init__(self, x_dimension, y_dimension, x_margin, y_margin):
         self.stone_mines_list = []
         self.iron_mines_list = []
         self.diamond_mines_list = []
         self.logging_mines_list = []
+        self.grass_mines_list = []
+        self.big_grass_mines_list = []
         self.x_dimension = x_dimension
         self.y_dimension = y_dimension
         self.x_margin = x_margin
@@ -31,6 +36,7 @@ class Map:
         self.tiles = [[i_row * j_column for j_column in range(self.x_dimension)]for i_row in range(self.y_dimension)]
         self.mountains_without_mines_list = []
         self.forests_without_mines_list = []
+        self.grass_without_mines_list = []
         for i_row in range(len(self.tiles)):
             for j_column in range(len(self.tiles[i_row])):
                 #print("map_normal dimension:", len(MapData.map_normal), "tiles dimension:", len(self.tiles), len(self.tiles[i_row]), "x_dimension:", x_dimension, "y_dimension:",y_dimension, "i:",i_row,"j:",j_column)
@@ -44,9 +50,12 @@ class Map:
                     self.mountains_without_mines_list.append(cell)
                 if cell.cell_type == CellType.FOREST:
                     self.forests_without_mines_list.append(cell)
+                if cell.cell_type == CellType.GRASS:
+                    self.grass_without_mines_list.append(cell)
                 #print("cell", cell.cell_type)
         self.create_mountain_mines()
         self.create_forest_mines()
+        self.create_grass_mines()
 
 
 
@@ -111,6 +120,26 @@ class Map:
                         self.logging_mines_list.append(mine)
                         self.forests_without_mines_list.remove(selected_forest_cell)
                         print('made a mine', mine.mine_type, 'index', index_forest)
+
+    def create_grass_mines(self):
+        while len(self.grass_mines_list) + len(self.big_grass_mines_list) < self.grass_mines_limit + self.big_grass_mines_limit:
+            index_grass = randint(0, len(self.grass_without_mines_list) - 1)
+            selected_grass_cell = self.grass_without_mines_list[index_grass]
+            if selected_grass_cell.has_mine() is not True:
+                if len(self.grass_mines_list) < Map.grass_mines_limit:
+                    print()
+                    mine = GrassMines.create_instance(selected_grass_cell, MineType.FOOD_MINE)
+                    if mine is not None:
+                        self.grass_mines_list.append(mine)
+                        self.grass_without_mines_list.remove(selected_grass_cell)
+                        print('made a mine', mine.mine_type, 'index', index_grass)
+            if selected_grass_cell.has_mine() is not True:
+                if len(self.big_grass_mines_list) < Map.big_grass_mines_limit:
+                    mine = GrassMines.create_instance(selected_grass_cell, MineType.BIG_FOOD_MINE)
+                    if mine is not None:
+                        self.big_grass_mines_list.append(mine)
+                        self.grass_without_mines_list.remove(selected_grass_cell)
+                        print('made a mine', mine.mine_type, 'index', index_grass)
     @staticmethod
     def convert_screen_xy_to_map_pos(x, y):
         cell_width = settings.cell_size[0]

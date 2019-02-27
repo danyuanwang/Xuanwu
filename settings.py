@@ -44,3 +44,12 @@ logging_mine_number = {
     'low_value': 3,
     'high_value': 5,
 }
+#hunting grounds
+hunting_mine_number = {
+    'low_value': 4,
+    'high_value': 6,
+}
+big_hunting_mine_number = {
+    'low_value': 3,
+    'high_value': 5,
+}
