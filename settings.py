@@ -53,3 +53,11 @@ big_hunting_mine_number = {
     'low_value': 3,
     'high_value': 5,
 }
+
+big_logging_mine_number = {
+    'low_value': 1,
+    'high_value': 3,
+}
+
+possible_x_coordinates_for_shop = [9, 10]
+possible_y_coordinates_for_shop = [7, 8]

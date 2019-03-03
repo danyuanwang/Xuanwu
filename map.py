@@ -9,6 +9,7 @@ from logging_area import ForestMines
 from random import randint
 from constants import MineType
 from hunting_grounds import GrassMines
+from gdrasil import Shop
 
 class Map:
     stone_mines_limit = randint(settings.stone_mine_number['low_value'], settings.stone_mine_number['high_value'])
@@ -17,6 +18,7 @@ class Map:
     logging_mines_limit = randint(settings.logging_mine_number['low_value'], settings.logging_mine_number['high_value'])
     grass_mines_limit = randint(settings.hunting_mine_number['low_value'], settings.hunting_mine_number['high_value'])
     big_grass_mines_limit = randint(settings.big_hunting_mine_number['low_value'], settings.big_hunting_mine_number['high_value'])
+    big_logging_mines_limit = randint(settings.big_logging_mine_number['low_value'], settings.big_logging_mine_number['high_value'])
 
     def __init__(self, x_dimension, y_dimension, x_margin, y_margin):
         self.stone_mines_list = []
@@ -25,6 +27,7 @@ class Map:
         self.logging_mines_list = []
         self.grass_mines_list = []
         self.big_grass_mines_list = []
+        self.big_logging_mines_list = []
         self.x_dimension = x_dimension
         self.y_dimension = y_dimension
         self.x_margin = x_margin
@@ -53,9 +56,11 @@ class Map:
                 if cell.cell_type == CellType.GRASS:
                     self.grass_without_mines_list.append(cell)
                 #print("cell", cell.cell_type)
+        self.create_shop()
         self.create_mountain_mines()
         self.create_forest_mines()
         self.create_grass_mines()
+
 
 
 
@@ -110,7 +115,7 @@ class Map:
                         print('made a mine', mine.mine_type, 'index', index_mountain)
 
     def create_forest_mines(self):
-        while len(self.logging_mines_list) < self.logging_mines_limit:
+        while len(self.logging_mines_list) + len(self.big_logging_mines_list) < self.logging_mines_limit + self.big_logging_mines_limit:
             index_forest = randint(0, len(self.forests_without_mines_list) - 1)
             selected_forest_cell = self.forests_without_mines_list[index_forest]
             if selected_forest_cell.has_mine() is not True:
@@ -118,6 +123,13 @@ class Map:
                     mine = ForestMines.create_instance(selected_forest_cell, MineType.LOG_MINE)
                     if mine is not None:
                         self.logging_mines_list.append(mine)
+                        self.forests_without_mines_list.remove(selected_forest_cell)
+                        print('made a mine', mine.mine_type, 'index', index_forest)
+            if selected_forest_cell.has_mine() is not True:
+                if len(self.big_logging_mines_list) < Map.big_logging_mines_limit:
+                    mine = ForestMines.create_instance(selected_forest_cell, MineType.BIG_LOG_MINE)
+                    if mine is not None:
+                        self.big_logging_mines_list.append(mine)
                         self.forests_without_mines_list.remove(selected_forest_cell)
                         print('made a mine', mine.mine_type, 'index', index_forest)
 
@@ -140,6 +152,12 @@ class Map:
                         self.big_grass_mines_list.append(mine)
                         self.grass_without_mines_list.remove(selected_grass_cell)
                         print('made a mine', mine.mine_type, 'index', index_grass)
+
+    def create_shop(self):
+        selected_tile = self.tiles[settings.possible_y_coordinates_for_shop[randint(0, 1)]][settings.possible_x_coordinates_for_shop[randint(0, 1)]]
+        if selected_tile.has_mine() is not True:
+            Shop.create_instance(selected_tile)
+
     @staticmethod
     def convert_screen_xy_to_map_pos(x, y):
         cell_width = settings.cell_size[0]

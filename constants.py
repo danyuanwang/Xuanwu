@@ -17,6 +17,7 @@ class MineType(Enum):
     LOG_MINE = 4,
     FOOD_MINE = 5,
     BIG_FOOD_MINE = 6,
+    BIG_LOG_MINE = 7,
 
 
 class Color:
