@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class CellType(Enum):
     GRASS = 1,
     MOUNTAIN = 2,
@@ -7,6 +8,16 @@ class CellType(Enum):
     FOREST = 4,
     RIVER = 5,
     WATER = 6,
+
+
+class MineType(Enum):
+    STONE_MINE = 1,
+    IRON_MINE = 2,
+    DIAMOND_MINE = 3,
+    LOG_MINE = 4,
+    FOOD_MINE = 5,
+    BIG_FOOD_MINE = 6,
+    BIG_LOG_MINE = 7,
 
 
 class Color:
